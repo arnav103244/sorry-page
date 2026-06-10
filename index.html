@@ -49,22 +49,6 @@ button{
 <button id="noBtn">No 😢</button>
 
 <script>
-const FORM_URL =
-"https://docs.google.com/forms/d/e/1FAIpQLSfx3Qvgds-IJvZKOt80wzI8b3bWsbiDAROaue8A4shr2m6nRg/formResponse";
-
-const FIELD_ID = "entry.1433162080";
-
-function submitAnswer(answer){
-    fetch(FORM_URL,{
-        method:"POST",
-        mode:"no-cors",
-        headers:{
-            "Content-Type":"application/x-www-form-urlencoded"
-        },
-        body:`${FIELD_ID}=${encodeURIComponent(answer)}`
-    });
-}
-
 const yesBtn = document.getElementById("yesBtn");
 const noBtn = document.getElementById("noBtn");
 
@@ -82,12 +66,25 @@ noBtn.addEventListener("mouseover", () => {
 });
 
 yesBtn.addEventListener("click", () => {
-    submitAnswer("Yes");
+
+    const form = document.createElement("form");
+    form.method = "POST";
+    form.action = "https://docs.google.com/forms/d/e/1FAIpQLSfx3Qvgds-IJvZKOt80wzI8b3bWsbiDAROaue8A4shr2m6nRg/formResponse";
+    form.target = "_blank";
+
+    const input = document.createElement("input");
+    input.type = "hidden";
+    input.name = "entry.1433162080";
+    input.value = "Yes";
+
+    form.appendChild(input);
+    document.body.appendChild(form);
+    form.submit();
 
     document.body.innerHTML = `
         <h1>YAY! ❤️</h1>
         <h2>Thank you for forgiving me baby 🥰</h2>
-        <p> i will never hurt you again ever again baccha !</p>
+        <p>I will never hurt you again, baccha!</p>
     `;
 });
 </script>
